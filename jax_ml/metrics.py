@@ -14,8 +14,9 @@ def get_mahalanobis(conv_inv):
     def mahalanobis(x, y, VI):
         '''mahalanobis function
         '''
-        a = jnp.dot(x, VI)
-        return jnp.dot(a, y.T).squeeze()
+        diff = x - y
+        a = jnp.dot(diff, VI)
+        return jnp.sqrt(jnp.dot(a, diff.T))[0]
 
     return partial(mahalanobis, VI=conv_inv)
 
